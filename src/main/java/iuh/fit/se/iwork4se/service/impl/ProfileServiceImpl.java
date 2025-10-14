@@ -6,7 +6,7 @@ import iuh.fit.se.iwork4se.model.JobSeekerProfile;
 import iuh.fit.se.iwork4se.model.User;
 import iuh.fit.se.iwork4se.repository.JobSeekerProfileRepository;
 import iuh.fit.se.iwork4se.repository.UserRepository;
-import iuh.fit.se.iwork4se.service.ProfileService;
+import iuh.fit.se.iwork4se.service.JobSeekerProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +16,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class ProfileServiceImpl implements ProfileService {
+public class ProfileServiceImpl implements JobSeekerProfileService {
 
     private final JobSeekerProfileRepository profileRepo;
     private final UserRepository userRepo;

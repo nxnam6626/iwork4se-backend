@@ -32,6 +32,11 @@ public class JwtAuthFilter extends GenericFilter {
                 Claims claims = jws.getPayload();
                 String principal = claims.get("email", String.class);
                 if (principal == null) principal = claims.get("phone", String.class);
+                // expose current user id for downstream usage
+                String subjectUserId = claims.getSubject();
+                if (subjectUserId != null) {
+                    request.setAttribute("CURRENT_USER_ID", subjectUserId);
+                }
 
                 if (principal != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     UserDetails user = userDetailsService.loadUserByUsername(principal);
