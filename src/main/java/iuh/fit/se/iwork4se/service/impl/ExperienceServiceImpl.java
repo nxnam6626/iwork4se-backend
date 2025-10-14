@@ -43,7 +43,7 @@ public class ExperienceServiceImpl implements ExperienceService {
                 .endDate(e.getEndDate())
                 .isCurrent(e.isCurrent())
                 .description(e.getDescription())
-                .profileId(e.getJobSeekerProfile().getJobSeekerProfileId())
+                .jobSeekerProfileId(e.getJobSeekerProfile().getJobSeekerProfileId())
                 .build();
     }
 
@@ -58,6 +58,13 @@ public class ExperienceServiceImpl implements ExperienceService {
     public ExperienceDTO createMyExperience(UUID currentUserId, String companyName, String title,
                                             LocalDate startDate, LocalDate endDate, boolean isCurrent, String description) {
         JobSeekerProfile p = requireMyProfile(currentUserId);
+        
+        // Kiểm tra trùng lặp: cùng company + title + startDate
+        if (expRepo.existsByJobSeekerProfile_JobSeekerProfileIdAndCompanyNameAndTitleAndStartDate(
+                p.getJobSeekerProfileId(), companyName, title, startDate)) {
+            throw new IllegalArgumentException("Experience record already exists with same company, title and start date");
+        }
+        
         Experience e = Experience.builder()
                 .jobSeekerProfile(p).companyName(companyName).title(title)
                 .startDate(startDate).endDate(endDate).isCurrent(isCurrent).description(description)

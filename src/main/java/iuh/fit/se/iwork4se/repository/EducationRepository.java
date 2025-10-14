@@ -8,5 +8,8 @@ import java.util.UUID;
 
 public interface EducationRepository extends JpaRepository<Education, UUID> {
     List<Education> findByJobSeekerProfile_JobSeekerProfileId(UUID jobSeekerProfileId);
-
+    
+    // Kiểm tra trùng lặp: cùng school + degree + major + startYear
+    boolean existsByJobSeekerProfile_JobSeekerProfileIdAndSchoolAndDegreeAndMajorAndStartYear(
+            UUID jobSeekerProfileId, String school, String degree, String major, java.time.LocalDate startYear);
 }

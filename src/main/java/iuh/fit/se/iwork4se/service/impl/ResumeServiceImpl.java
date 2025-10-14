@@ -42,7 +42,7 @@ public class ResumeServiceImpl implements ResumeService {
                 .id(r.getResumeId())
                 .title(r.getTitle())
                 .updatedAt(r.getUpdatedAt())
-                .profileId(r.getJobSeekerProfile().getJobSeekerProfileId())
+                .jobSeekerProfileId(r.getJobSeekerProfile().getJobSeekerProfileId())
                 .currentFileId(r.getCurrentFile() != null ? r.getCurrentFile().getCVId() : null)
                 .build();
     }
@@ -57,6 +57,13 @@ public class ResumeServiceImpl implements ResumeService {
     @Override
     public ResumeDTO createMyResume(UUID currentUserId, String title) {
         JobSeekerProfile p = requireMyProfile(currentUserId);
+        
+        // Kiểm tra trùng lặp: cùng title
+        if (resumeRepo.existsByJobSeekerProfile_JobSeekerProfileIdAndTitle(
+                p.getJobSeekerProfileId(), title)) {
+            throw new IllegalArgumentException("Resume with this title already exists");
+        }
+        
         Resume r = Resume.builder().jobSeekerProfile(p).title(title).updatedAt(Instant.now()).build();
         return toDTO(resumeRepo.save(r));
     }

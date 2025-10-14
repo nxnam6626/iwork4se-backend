@@ -43,7 +43,7 @@ public class EducationServiceImpl implements EducationService {
                 .startYear(e.getStartYear())
                 .endYear(e.getEndYear())
                 .description(e.getDescription())
-                .profileId(e.getJobSeekerProfile().getJobSeekerProfileId())
+                .jobSeekerProfileId(e.getJobSeekerProfile().getJobSeekerProfileId())
                 .build();
     }
 
@@ -58,6 +58,13 @@ public class EducationServiceImpl implements EducationService {
     public EducationDTO createMyEducation(UUID currentUserId, String school, String degree, String major,
                                           LocalDate startYear, LocalDate endYear, String description) {
         JobSeekerProfile p = requireMyProfile(currentUserId);
+        
+        // Kiểm tra trùng lặp: cùng school + degree + major + startYear
+        if (eduRepo.existsByJobSeekerProfile_JobSeekerProfileIdAndSchoolAndDegreeAndMajorAndStartYear(
+                p.getJobSeekerProfileId(), school, degree, major, startYear)) {
+            throw new IllegalArgumentException("Education record already exists with same school, degree, major and start year");
+        }
+        
         Education e = Education.builder()
                 .jobSeekerProfile(p).school(school).degree(degree).major(major)
                 .startYear(startYear).endYear(endYear).description(description)

@@ -8,4 +8,8 @@ import java.util.UUID;
 
 public interface ReferencePersonRepository extends JpaRepository<ReferencePerson, UUID> {
     List<ReferencePerson> findByJobSeekerProfile_JobSeekerProfileId(UUID jobSeekerProfileId);
+    
+    // Kiểm tra trùng lặp: cùng name + email
+    boolean existsByJobSeekerProfile_JobSeekerProfileIdAndNameAndEmail(
+            UUID jobSeekerProfileId, String name, String email);
 }

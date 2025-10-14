@@ -47,6 +47,12 @@ public class CVFileServiceImpl implements CVFileService {
             if (!r.getJobSeekerProfile().getUser().getUserId().equals(currentUserId))
                 throw new ForbiddenException("Not your resume");
         }
+        
+        // Kiểm tra trùng lặp: cùng fileName
+        if (cvRepo.existsByOwnerUserIdAndFileName(currentUserId, fileName)) {
+            throw new IllegalArgumentException("CV file with this name already exists");
+        }
+        
         CVFile f = CVFile.builder()
                 .ownerUserId(currentUserId)
                 .resume(r)
@@ -72,5 +78,13 @@ public class CVFileServiceImpl implements CVFileService {
                 .orElseThrow(() -> new ResourceNotFoundException("CVFile not found"));
         if (!f.getOwnerUserId().equals(currentUserId)) throw new ForbiddenException("Not your CV file");
         return toDTO(f);
+    }
+
+    @Override
+    public void deleteMyCVFile(UUID currentUserId, UUID cvFileId) {
+        CVFile f = cvRepo.findById(cvFileId)
+                .orElseThrow(() -> new ResourceNotFoundException("CVFile not found"));
+        if (!f.getOwnerUserId().equals(currentUserId)) throw new ForbiddenException("Not your CV file");
+        cvRepo.delete(f);
     }
 }

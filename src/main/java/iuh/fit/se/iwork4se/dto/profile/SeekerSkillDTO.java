@@ -12,7 +12,7 @@ import java.util.UUID;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SeekerSkillDTO {
     private UUID id;
-    private UUID profileId;
+    private UUID jobSeekerProfileId;
     private UUID skillId;
     private String skillName;
     private String level;

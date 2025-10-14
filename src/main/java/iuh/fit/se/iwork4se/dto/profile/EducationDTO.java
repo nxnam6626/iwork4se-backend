@@ -19,5 +19,5 @@ public class EducationDTO {
     private LocalDate startYear;
     private LocalDate endYear;
     private String description;
-    private UUID profileId;
+    private UUID jobSeekerProfileId;
 }

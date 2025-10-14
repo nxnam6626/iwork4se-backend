@@ -39,7 +39,7 @@ public class SeekerSkillServiceImpl implements SeekerSkillService {
     private SeekerSkillDTO toDTO(SeekerSkill ss) {
         return SeekerSkillDTO.builder()
                 .id(ss.getSeekerSkillId())
-                .profileId(ss.getJobSeekerProfile().getJobSeekerProfileId())
+                .jobSeekerProfileId(ss.getJobSeekerProfile().getJobSeekerProfileId())
                 .skillId(ss.getSkill().getSkillId())
                 .skillName(ss.getSkill().getName())
                 .level(ss.getLevel())

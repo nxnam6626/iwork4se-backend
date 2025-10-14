@@ -9,4 +9,5 @@ public interface CVFileService {
     CVFileDTO createMyCVFile(UUID currentUserId, UUID resumeId, String objectKey, String fileName, String mimeType, long size);
     List<CVFileDTO> listMyCVFiles(UUID currentUserId);
     CVFileDTO getMyCVFile(UUID currentUserId, UUID cvFileId);
+    void deleteMyCVFile(UUID currentUserId, UUID cvFileId);
 }

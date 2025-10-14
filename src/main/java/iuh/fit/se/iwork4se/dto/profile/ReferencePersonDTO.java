@@ -16,5 +16,5 @@ public class ReferencePersonDTO {
     private String company;
     private String email;
     private String relation;
-    private UUID profileId;
+    private UUID jobSeekerProfileId;
 }

@@ -19,5 +19,5 @@ public class ExperienceDTO {
     private LocalDate endDate;
     private boolean isCurrent;
     private String description;
-    private UUID profileId;
+    private UUID jobSeekerProfileId;
 }

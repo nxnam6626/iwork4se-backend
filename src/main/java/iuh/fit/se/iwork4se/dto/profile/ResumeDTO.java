@@ -15,6 +15,6 @@ public class ResumeDTO {
     private UUID id;
     private String title;
     private Instant updatedAt;
-    private UUID profileId;
+    private UUID jobSeekerProfileId;
     private UUID currentFileId;
 }

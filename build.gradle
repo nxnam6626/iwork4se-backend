@@ -43,6 +43,10 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.13.0")
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.13.0")
+    
+    // AWS S3 dependencies
+    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.565'
+    implementation 'com.amazonaws:aws-java-sdk-core:1.12.565'
 }
 
 tasks.named('test') {

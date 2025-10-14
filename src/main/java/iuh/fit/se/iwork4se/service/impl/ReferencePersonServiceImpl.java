@@ -40,7 +40,7 @@ public class ReferencePersonServiceImpl implements ReferencePersonService {
                 .company(r.getCompany())
                 .email(r.getEmail())
                 .relation(r.getRelation())
-                .profileId(r.getJobSeekerProfile().getJobSeekerProfileId())
+                .jobSeekerProfileId(r.getJobSeekerProfile().getJobSeekerProfileId())
                 .build();
     }
 
@@ -54,6 +54,13 @@ public class ReferencePersonServiceImpl implements ReferencePersonService {
     @Override
     public ReferencePersonDTO createMyReference(UUID currentUserId, String name, String company, String email, String relation) {
         JobSeekerProfile p = requireMyProfile(currentUserId);
+        
+        // Kiểm tra trùng lặp: cùng name + email
+        if (refRepo.existsByJobSeekerProfile_JobSeekerProfileIdAndNameAndEmail(
+                p.getJobSeekerProfileId(), name, email)) {
+            throw new IllegalArgumentException("Reference person already exists with same name and email");
+        }
+        
         ReferencePerson r = ReferencePerson.builder()
                 .jobSeekerProfile(p).name(name).company(company).email(email).relation(relation).build();
         return toDTO(refRepo.save(r));
