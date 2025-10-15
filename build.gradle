@@ -47,6 +47,9 @@ dependencies {
     // AWS S3 dependencies
     implementation 'com.amazonaws:aws-java-sdk-s3:1.12.565'
     implementation 'com.amazonaws:aws-java-sdk-core:1.12.565'
+
+    // Load environment variables from .env during development
+    implementation 'me.paulschwarz:spring-dotenv:4.0.0'
 }
 
 tasks.named('test') {
