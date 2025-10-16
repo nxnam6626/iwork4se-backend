@@ -54,11 +54,32 @@ public class SeekerSkillServiceImpl implements SeekerSkillService {
     }
 
     @Override
-    public SeekerSkillDTO addMySkill(UUID currentUserId, UUID skillId, String level) {
+    public SeekerSkillDTO addMySkill(UUID currentUserId, String skillName, String level) {
         JobSeekerProfile p = requireMyProfile(currentUserId);
-        Skill s = skillRepo.findById(skillId)
-                .orElseThrow(() -> new ResourceNotFoundException("Skill not found"));
-        SeekerSkill ss = SeekerSkill.builder().jobSeekerProfile(p).skill(s).level(level).build();
+        
+        // Tìm skill theo tên (case-insensitive)
+        Skill skill = skillRepo.findByNameIgnoreCase(skillName.trim())
+                .orElseGet(() -> {
+                    // Nếu chưa có skill, tạo mới
+                    Skill newSkill = Skill.builder()
+                            .name(skillName.trim())
+                            .build();
+                    return skillRepo.save(newSkill);
+                });
+        
+        // Kiểm tra xem skill này đã được thêm vào profile chưa
+        boolean alreadyExists = seekerSkillRepo.existsByJobSeekerProfile_JobSeekerProfileIdAndSkill_SkillId(
+                p.getJobSeekerProfileId(), skill.getSkillId());
+        
+        if (alreadyExists) {
+            throw new IllegalArgumentException("Skill '" + skillName + "' already exists in your profile");
+        }
+        
+        SeekerSkill ss = SeekerSkill.builder()
+                .jobSeekerProfile(p)
+                .skill(skill)
+                .level(level)
+                .build();
         return toDTO(seekerSkillRepo.save(ss));
     }
 

@@ -27,7 +27,7 @@ public class SeekerSkillController {
 
     @PostMapping
     public ResponseEntity<SeekerSkillDTO> add(@Valid @RequestBody AddSeekerSkillRequest req) {
-        return ResponseEntity.ok(seekerSkillService.addMySkill(SecurityUtil.currentUserId(), req.skillId(), req.level()));
+        return ResponseEntity.ok(seekerSkillService.addMySkill(SecurityUtil.currentUserId(), req.skillName(), req.level()));
     }
 
     @PutMapping("/{seekerSkillId}")

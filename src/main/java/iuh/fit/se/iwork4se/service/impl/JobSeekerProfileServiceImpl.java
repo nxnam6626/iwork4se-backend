@@ -16,7 +16,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class ProfileServiceImpl implements JobSeekerProfileService {
+public class JobSeekerProfileServiceImpl implements JobSeekerProfileService {
 
     private final JobSeekerProfileRepository profileRepo;
     private final UserRepository userRepo;

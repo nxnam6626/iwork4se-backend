@@ -3,6 +3,7 @@ package iuh.fit.se.iwork4se.controller;
 import iuh.fit.se.iwork4se.model.User;
 import iuh.fit.se.iwork4se.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }

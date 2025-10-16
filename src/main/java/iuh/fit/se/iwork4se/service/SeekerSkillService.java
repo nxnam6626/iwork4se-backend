@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface SeekerSkillService {
     List<SeekerSkillDTO> listMySeekerSkills(UUID currentUserId);
-    SeekerSkillDTO addMySkill(UUID currentUserId, UUID skillId, String level);
+    SeekerSkillDTO addMySkill(UUID currentUserId, String skillName, String level);
     SeekerSkillDTO updateMySkillLevel(UUID currentUserId, UUID seekerSkillId, String level);
     void removeMySkill(UUID currentUserId, UUID seekerSkillId);
 }
