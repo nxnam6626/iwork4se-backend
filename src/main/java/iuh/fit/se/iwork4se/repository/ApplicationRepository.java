@@ -12,6 +12,13 @@ public interface ApplicationRepository extends JpaRepository<Application, UUID> 
     Page<Application> findByJob_Company_CompanyId(UUID companyId, Pageable pageable);
     Page<Application> findByJob_Company_CompanyIdAndStatus(UUID companyId, ApplicationStatus status, Pageable pageable);
     Page<Application> findByJob_JobId(UUID jobId, Pageable pageable);
+    Page<Application> findByJobSeekerProfile_JobSeekerProfileId(UUID jobSeekerProfileId, Pageable pageable);
+    boolean existsByJob_JobIdAndJobSeekerProfile_JobSeekerProfileId(UUID jobId, UUID jobSeekerProfileId);
+    
+    /**
+     * Check if job seeker has applied to any job at a specific company
+     */
+    boolean existsByJob_Company_CompanyIdAndJobSeekerProfile_JobSeekerProfileId(UUID companyId, UUID jobSeekerProfileId);
 }
 
 
