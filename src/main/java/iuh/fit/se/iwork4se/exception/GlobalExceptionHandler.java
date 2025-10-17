@@ -2,6 +2,7 @@ package iuh.fit.se.iwork4se.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,6 +35,28 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleIllegalArgument(IllegalArgumentException ex) {
         Map<String, Object> body = new HashMap<>();
         body.put("error", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Map<String, Object>> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
+        Map<String, Object> body = new HashMap<>();
+        
+        // Xử lý các trường hợp lỗi phổ biến
+        String message = ex.getMessage();
+        if (message.contains("Cannot deserialize value of type")) {
+            if (message.contains("Role")) {
+                body.put("error", "Invalid role value. Role must be one of: JOBSEEKER, EMPLOYER, ADMIN");
+            } else {
+                body.put("error", "Invalid field value in request body");
+            }
+        } else if (message.contains("JSON parse error")) {
+            body.put("error", "Invalid JSON format in request body");
+        } else {
+            body.put("error", "Request body is invalid or malformed");
+        }
+        
+        body.put("details", message);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
 }

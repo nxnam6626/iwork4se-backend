@@ -4,13 +4,23 @@ import iuh.fit.se.iwork4se.model.Job;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
-public interface JobRepository extends JpaRepository<Job, UUID> {
+public interface JobRepository extends JpaRepository<Job, UUID>, JpaSpecificationExecutor<Job> {
     Page<Job> findByCompany_CompanyIdOrderByCreatedAtDesc(UUID companyId, Pageable pageable);
+    
+    // Public search methods
+    Page<Job> findByCompany_NameContainingIgnoreCase(String companyName, Pageable pageable);
+    Page<Job> findByCompany_IndustryContainingIgnoreCase(String industry, Pageable pageable);
+    Page<Job> findBySalaryMinGreaterThanEqual(Integer minSalary, Pageable pageable);
+    
+    // Admin methods
+    Page<Job> findByExpireAtBeforeAndExpireAtAfter(LocalDate before, LocalDate after, Pageable pageable);
     
     @Query("SELECT j FROM Job j WHERE " +
            "(:keyword IS NULL OR LOWER(j.title) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +

@@ -14,13 +14,19 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CompanyReviewDTO {
 
-    private UUID reviewId;
+    private UUID id;
     private UUID companyId;
     private String companyName;
     private UUID jobSeekerProfileId;
     private String jobSeekerName;
     private Double rating;
     private String comment;
+    private String title;
+    private String pros;
+    private String cons;
+    private Boolean recommendToFriend;
+    private String status;
+    private String adminNotes;
     private Instant createdAt;
     private Instant updatedAt;
 }

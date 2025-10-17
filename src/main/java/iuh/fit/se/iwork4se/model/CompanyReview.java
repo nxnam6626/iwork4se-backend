@@ -35,6 +35,25 @@ public class CompanyReview {
     @Column(columnDefinition = "TEXT")
     private String comment;
 
+    @Column(length = 200)
+    private String title;
+
+    @Column(columnDefinition = "TEXT")
+    private String pros;
+
+    @Column(columnDefinition = "TEXT")
+    private String cons;
+
+    @Column(name = "recommend_to_friend")
+    private Boolean recommendToFriend;
+
+    @Column(length = 20)
+    @Builder.Default
+    private String status = "PENDING"; // PENDING, APPROVED, REJECTED
+
+    @Column(name = "admin_notes", columnDefinition = "TEXT")
+    private String adminNotes;
+
     @Column(name = "created_at", nullable = false)
     @Builder.Default
     private Instant createdAt = Instant.now();

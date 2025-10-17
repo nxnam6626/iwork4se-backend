@@ -3,6 +3,7 @@ package iuh.fit.se.iwork4se.controller;
 
 import iuh.fit.se.iwork4se.dto.auth.*;
 import iuh.fit.se.iwork4se.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest req) {
+    public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest req) {
         RegisterResponse res = authService.register(req);
         return ResponseEntity.status(HttpStatus.CREATED).body(res);
     }

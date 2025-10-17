@@ -153,7 +153,7 @@ public class JobSeekerReviewServiceImpl implements JobSeekerReviewService {
 
     private CompanyReviewDTO convertToDTO(CompanyReview review) {
         return CompanyReviewDTO.builder()
-                .reviewId(review.getReviewId())
+                .id(review.getReviewId())
                 .companyId(review.getCompany().getCompanyId())
                 .companyName(review.getCompany().getName())
                 .jobSeekerProfileId(review.getJobSeekerProfile().getJobSeekerProfileId())

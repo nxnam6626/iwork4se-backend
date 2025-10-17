@@ -48,4 +48,31 @@ public interface CompanyReviewRepository extends JpaRepository<CompanyReview, UU
      */
     @Query("SELECT COUNT(cr) FROM CompanyReview cr WHERE cr.company.companyId = :companyId")
     Long countReviewsByCompanyId(@Param("companyId") UUID companyId);
+
+    // Admin methods
+    /**
+     * Find reviews by status
+     */
+    Page<CompanyReview> findByStatus(String status, Pageable pageable);
+
+    /**
+     * Count reviews by status
+     */
+    Long countByStatus(String status);
+
+    /**
+     * Get average rating across all companies
+     */
+    @Query("SELECT AVG(cr.rating) FROM CompanyReview cr")
+    Double getAverageRating();
+
+    /**
+     * Find reviews by company
+     */
+    Page<CompanyReview> findByCompany_CompanyId(UUID companyId, Pageable pageable);
+
+    /**
+     * Find low rating reviews
+     */
+    Page<CompanyReview> findByRatingLessThanEqual(Integer rating, Pageable pageable);
 }

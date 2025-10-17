@@ -46,6 +46,7 @@ public class JwtAuthFilter extends GenericFilter {
                 }
             } catch (Exception ignored) {}
         }
+        System.out.println("JwtAuthFilter triggered: " + request.getRequestURI());
         chain.doFilter(req, res);
     }
 }
