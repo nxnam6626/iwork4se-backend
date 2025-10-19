@@ -24,7 +24,6 @@ import org.springframework.util.StringUtils;
 
 import java.time.Instant;
 import java.util.UUID;
-
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
@@ -114,7 +113,7 @@ public class AuthServiceImpl implements AuthService {
                     new UsernamePasswordAuthenticationToken(normalizedIdentifier, req.password())
             );
         } catch (BadCredentialsException ex) {
-            throw new BadCredentialsException("Invalid credentials");
+            throw new BadCredentialsException("Thông tin xác thực không hợp lệ");
         }
 
         User user = loginWithEmail
@@ -123,7 +122,7 @@ public class AuthServiceImpl implements AuthService {
                 : userRepository.findByPhone(normalizedIdentifier)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        // Đã enforced verified trong UserDetailsService, tới đây coi như OK
+        // Đã enforced verified trong UserDetailsService
 
         String access = jwt.generateAccessToken(
                 user.getUserId(), user.getEmail(), user.getPhone(), user.getRole().name()

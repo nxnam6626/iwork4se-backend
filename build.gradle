@@ -48,6 +48,10 @@ dependencies {
     implementation 'com.amazonaws:aws-java-sdk-s3:1.12.565'
     implementation 'com.amazonaws:aws-java-sdk-core:1.12.565'
 
+    // Supabase dependencies (using OkHttp for direct API calls)
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.0'
+
     // Load environment variables from .env during development
     implementation 'me.paulschwarz:spring-dotenv:4.0.0'
 }
